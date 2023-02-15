@@ -47,10 +47,9 @@ body {
   .game {
     display: flex;
     justify-content: center;
-    
   }
   
   .game-info {
-    margin-left: 20px;
+    margin-left: 50px;
   }
   
