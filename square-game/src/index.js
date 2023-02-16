@@ -6,17 +6,24 @@ import Board from './components/Board';
 class Game extends React.Component {
 
     state = {
-        history: [{
-            squares: Array(9).fill(null)
-        }],
+        history: [
+            {
+                squares: Array(9).fill(null)
+            }
+        ],
         isFirstPlayer: true,
         stepNumber: 0,
     }
 
     handleClick = i => {
+        // slice() permet de faire une copie du tableau
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        console.log(history)
         const current = history[history.length - 1];
+        console.log(current)
         const squares = current.squares.slice()
+        console.log({squares})
+
 
         if (calculateWinner(squares) || squares[i]) {
             return;
@@ -25,9 +32,11 @@ class Game extends React.Component {
         squares[i] = this.state.isFirstPlayer ? 'X' : 'O'
 
         this.setState({
-            history: history.concat([{
-                squares: squares,
-            }]),
+            history: history.concat([
+                {
+                    squares: squares,
+                }
+            ]),
             stepNumber: history.length,
             isFirstPlayer: !this.state.isFirstPlayer
         })  
@@ -44,9 +53,7 @@ class Game extends React.Component {
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
-        let status;
-        const winner = calculateWinner(current.squares)
-
+        
         const moves = history.map((step, move) => {
             const desc = move ?
                 'Go to move #' + move :
@@ -58,6 +65,9 @@ class Game extends React.Component {
             );
         });
         
+        let status;
+        const winner = calculateWinner(current.squares)
+
         if (winner)
             status = "Winner: " + winner 
         else
